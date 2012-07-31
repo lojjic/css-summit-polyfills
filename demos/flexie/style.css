@@ -1,0 +1,68 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+    height: 100%;
+}
+
+#main div {
+    border: 1px solid;
+    padding: 5px;
+    background: #FFF;
+}
+
+
+#main {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-orient: horizontal;
+    -moz-box-orient: horizontal;
+    box-orient: horizontal;
+    width: 100%;
+    height: 100%;
+}
+
+div#toolbox {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    width: 200px;
+    background: #CCC;
+}
+#toolbox .tree {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+}
+
+div#canvas {
+    -webkit-box-flex: 1;
+    -moz-box-flex: 1;
+    box-flex: 1;
+    background: #EEE;
+}
+
+div#structure {
+    display: -webkit-box;
+    display: -moz-box;
+    display: box;
+    -webkit-box-orient: vertical;
+    -moz-box-orient: vertical;
+    box-orient: vertical;
+    width: 300px;
+    background: #CCC;
+}
+#structure .inspector {
+    -webkit-box-flex: 2;
+    -moz-box-flex: 2;
+    box-flex: 2;
+}
+#structure .config {
+    -webkit-box-flex: 3;
+    -moz-box-flex: 3;
+    box-flex: 3;
+}

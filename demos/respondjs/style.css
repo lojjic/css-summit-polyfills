@@ -1,0 +1,41 @@
+
+html, body {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    max-width: 800px;
+    height: 100%;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.nav {
+    border: 3px solid red;
+    padding: 12px 12px 120px;
+    float: right;
+    width: 200px;
+}
+
+.content {
+    border: 3px solid blue;
+    padding: 12px 12px 120px;
+    margin-right: 230px;
+}
+
+
+@media screen and (max-width: 960px) {
+}
+
+@media screen and (max-width:480px) {
+    .main, .nav, .content {
+        width: auto;
+        height: auto;
+        float: none;
+        margin: 0;
+    }
+    .main {
+        padding: 0;
+    }
+}

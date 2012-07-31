@@ -1,0 +1,709 @@
+<!DOCTYPE html>
+
+<!--
+  Google HTML5 slide template
+
+  Authors: Luke Mahé (code)
+           Marcin Wichary (code and design)
+           
+           Dominic Mazzoni (browser compatibility)
+           Charles Chen (ChromeVox support)
+
+  URL: http://code.google.com/p/html5slides/
+-->
+
+<html>
+<head>
+    <title>Presentation</title>
+
+    <meta charset='utf-8'>
+    <script src='html5slides/slides.js'></script>
+</head>
+
+<style>
+    article h3 {
+        margin-bottom: 1em;
+    }
+    article dfn {
+        font-weight: bold;
+        font-style: normal;
+    }
+
+    article ul ul:first-child {
+        margin-top: .5em;
+    }
+
+
+    #title h1 {
+        padding: 0;
+        margin: 115px 0 .5em;
+    }
+    #title img {
+        margin-top: 2em;
+    }
+
+    #title img:last-child {
+        float: right;
+    }
+
+
+    #defns q {
+        font-size: 40px;
+        margin-right: 0;
+        margin-top: 70px;
+    }
+
+
+    #etymology p {
+        padding-top: 65px;
+        padding-right: 300px;
+    }
+
+
+    .ielogo {
+        text-align: center;
+    }
+    .oldIE {
+        text-align: center;
+        font-size: 60px;
+    }
+    .newerBrowsers {
+        width: 630px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
+
+    #not-abstraction .abstraction {
+        font-size: 1.25em;
+        margin: 50px auto;
+        width: 230px;
+        height: 230px;
+        line-height: 230px;
+        text-align: center;
+        position: relative;
+    }
+    #not-abstraction .abstraction > .not {
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        border: 10px solid red;
+        border-radius: 100%;
+        opacity: 0.8;
+    }
+    #not-abstraction .abstraction > .not:before {
+        content: "";
+        position: absolute;
+        top: 100px;
+        left: -5px;
+        background: red;
+        width: 220px;
+        height: 10px;
+        -webkit-transform: rotate(-45deg);
+        -moz-transform: rotate(-45deg);
+        transform: rotate(-45deg);
+    }
+
+    #modernizr-classes .prettyprint .atv {
+        opacity: 0.5;
+    }
+    #modernizr-classes .prettyprint strong .atv {
+        opacity: 1;
+    }
+
+    .offtopic {
+        opacity: 0.5;
+    }
+
+
+    #html5shiv img {
+        float: right;
+        margin-left: 20px;
+        width: 240px;
+    }
+    #html5shiv pre {
+        margin: 20px 0;
+    }
+
+    #prefixfree img,
+    #selectivizr img,
+    #css3pie img {
+        float: right;
+    }
+
+
+    .q-and-a {
+        font-size: 1.5em;
+    }
+
+
+    .no {
+        color: #C00;
+    }
+    .maybe {
+        color: #00C;
+    }
+    .yes {
+        color: #0C0;
+    }
+
+
+    #fin p {
+        text-align: right;
+    }
+</style>
+
+<body style='display: none'>
+
+<section class='slides layout-regular'>
+
+    <article id="title">
+        <h1>CSS Polyfills</h1>
+
+        <p>Jason Johnston</p>
+        <p>@lojjic, @css3pie</p>
+
+        <p>
+            <img src="images/sencha-logo.png" alt="Sencha" width="300"/>
+            <img src="images/css3pie-logo.png" alt="CSS3 PIE" width="194"/>
+        </p>
+    </article>
+
+
+
+    <article id="defns">
+        <h3>Whoziwhutzit?</h3>
+
+        <div class="build">
+            <p class="build">Also known as:
+                <span>
+                    <span>shim</span><span>, shiv</span><span>, patch</span><span>, hack</span>
+                </span>
+            </p>
+            <p>Term <dfn>&ldquo;polyfill&rdquo;</dfn> coined by Remy Sharp:</p>
+            <p><q>a piece of code (or plugin) that provides the technology that you, the developer, expect the browser to provide natively</q></p>
+        </div>
+    </article>
+
+
+
+    <article id="etymology" class="fill">
+        <h3>Polyfill</h3>
+
+        <img src='images/spackle.png'>
+
+        <div class="build">
+            <p><dfn>FILL</dfn>: fills in missing <em>standard</em> features or APIs when not natively available</p>
+            <p><dfn>POLY</dfn>: can use multiple fallbacks depending on the browser and environment</p>
+        </div>
+    </article>
+
+
+
+    <article>
+        <h3>Why are they needed?</h3>
+        <div class="build">
+            <p class="ielogo"><img src="images/ie678.jpg" alt="IE 6, 7, 8"></p>
+            <p class="oldIE">&ldquo;OldIE&rdquo;</p>
+            <p class="newerBrowsers">...but also newer browsers, to keep up with the pace of new features.</p>
+        </div>
+    </article>
+
+
+
+    <article id="not-abstraction">
+        <h3>Wait a minute...</h3>
+        <p>Don't most libraries smooth out browser incompatibilities?</p>
+        <div class="build">
+            <p class="abstraction">Abstraction<span class="not"></span></p>
+            <p>You use <em>standard code</em>, not new APIs</p>
+            <p>Goal is to be invisible</p>
+            <p>Ultimate goal is to become <em>obsolete</em></p>
+        </div>
+    </article>
+
+
+
+    <article>
+        <h3>Reasons To Use A Polyfill</h3>
+        <ul>
+            <li>Expand your audience</li>
+            <li>Speed up development time</li>
+            <li>More time available for better things</li>
+            <li>Only have to learn one API</li>
+            <li>Smaller, simpler codebase</li>
+            <li>Stop hurting capable browsers!</li>
+        </ul>
+    </article>
+
+
+
+    <article>
+        <h3><img src="images/modernizr.png" alt="Modernizr" width="400"></h3>
+        <p><a href="http://modernizr.com">http://modernizr.com</a></p>
+
+        <ul class="build">
+            <li><em>Not</em> a polyfill!</li>
+            <li>Makes polyfills easier to use</li>
+            <li>Extensive feature detection library</li>
+            <li>Includes YepNope (<a href="http://yepnopejs.com">http://yepnopejs.com</a>)</li>
+        </ul>
+    </article>
+
+
+
+    <article id="modernizr-classes">
+        <h3><img src="images/modernizr.png" alt="Modernizr" width="400"></h3>
+
+<pre><code>&lt;html class="js <strong>no-flexbox no-flexbox-legacy</strong> no-canvas no-canvastext
+ no-webgl no-touch no-geolocation postmessage no-websqldatabase
+ no-indexeddb hashchange no-history draganddrop no-websockets
+ <strong>no-rgba no-hsla no-multiplebgs no-backgroundsize no-borderimage
+ no-borderradius no-boxshadow no-textshadow no-opacity
+ no-cssanimations no-csscolumns no-cssgradients no-cssreflections
+ no-csstransforms no-csstransforms3d no-csstransitions fontface
+ generatedcontent</strong> no-video no-audio no-localstorage
+ no-sessionstorage no-webworkers no-applicationcache no-svg
+ no-inlinesvg no-smil no-svgclippaths"></code></pre>
+        <ul>
+            <li>Many CSS3 features detected</li>
+            <li>Allows progressive enhancement, conditional polyfill fine-tuning</li>
+        </ul>
+    </article>
+
+
+
+    <article>
+        <h3><img src="images/modernizr.png" alt="Modernizr" width="400"></h3>
+
+        <p><img src="images/yepnope-logo.jpg" alt="YepNope.js" width="350"></p>
+
+        <p>Conditional loading of polyfill scripts</p>
+
+        <pre><code>Modernizr.load([{
+    test: Modernizr.flexbox,
+    nope: '/polyfills/flexie/flexie.js'
+}, ... ]);</code></pre>
+
+        <p>Most CSS polyfills have their own way of doing this</p>
+    </article>
+
+
+
+    <article>
+        <h3><img src="images/modernizr.png" alt="Modernizr" width="400"></h3>
+
+        <p>Also from the Modernizr community:</p>
+
+        <p><strong>The All-In-One Entirely-Not-Alphabetical No-Bullshit Guide to HTML5 Fallbacks</strong></p>
+
+        <p><a href="http://bit.ly/polyfills">http://bit.ly/polyfills</a></p>
+    </article>
+
+
+    <article>
+        <h3>Things Polyfills Do</h3>
+        <ul>
+            <li class="offtopic">HTML5 Elements</li>
+            <li class="offtopic">JavaScript Language Features</li>
+            <li class="offtopic">HTML5 JavaScript APIs</li>
+            <li>CSS Selectors</li>
+            <li>CSS Vendor Prefixes</li>
+            <li>CSS Rendering - box decorations, layout, transforms, etc.</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Ways CSS Polyfills Work</h3>
+        <h4>1. Client-side CSS Parsing/Rewriting</h4>
+        <ul>
+            <li>For when CSS is not recognized by the browser
+                <ul>
+                    <li>Advanced selectors</li>
+                    <li>Media queries</li>
+                    <li>Prefix insertion</li>
+                </ul>
+            </li>
+            <li>CSS fetched via XHR &mdash; same-domain limitation</li>
+            <li>Parsed via RegExp, rewritten, and original stylesheet replaced with new</li>
+            <li>Processing time grows with size of CSS</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Ways CSS Polyfills Work</h3>
+        <h4>2. Server-side CSS Parsing/Rewriting</h4>
+        <ul>
+            <li>Some of the same scenarios as client-side</li>
+            <li>No extra client-side processing time</li>
+            <li>Limited by no access to the runtime environment</li>
+            <li>Conditionally load CSS to avoid hurting capable browsers</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Ways CSS Polyfills Work</h3>
+        <h4>3. DOM Querying</h4>
+        <ul>
+            <li>DOM is traversed looking for certain elements/attributes, then modified</li>
+            <li>Often used along with client-side CSS parsing</li>
+            <li>Must wait for document ready</li>
+            <li>Best for static content, difficult responding to dynamic DOM changes</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Ways CSS Polyfills Work</h3>
+        <h4>4. IE Behaviors (.htc)</h4>
+        <ul>
+            <li>Script attached to elements via CSS "behavior" property</li>
+            <li>IE only!</li>
+            <li>Responds automatically to insertion/deletion of content</li>
+            <li>Acts when <em>element</em> is ready, doesn't have to wait for whole document</li>
+            <li>Gotchas: same-domain limitation, content-type header, path relative to HTML file</li>
+            <li>Processing time grows with number of matching DOM elements</li>
+        </ul>
+    </article>
+    <article>
+        <h3>Ways CSS Polyfills Work</h3>
+        <h4>4. IE Behaviors (.htc)</h4>
+        <pre><code>.my-selector {
+    behavior: url(polyfill.htc);
+}</code></pre>
+
+        <pre><code>&lt;PUBLIC:COMPONENT lightWeight="true">
+&lt;PUBLIC:ATTACH EVENT="oncontentready" FOR="element" ONEVENT="init()" />
+&lt;PUBLIC:ATTACH EVENT="ondocumentready" FOR="element" ONEVENT="init()" />
+&lt;PUBLIC:ATTACH EVENT="ondetach" FOR="element" ONEVENT="cleanup()" />
+
+&lt;script type="text/javascript">
+//JS code
+&lt;/script>
+
+&lt;/PUBLIC:COMPONENT>
+</code></pre>
+    </article>
+
+
+
+    <article>
+        <h2>Let's explore a few...</h2>
+    </article>
+
+
+
+    <article id="html5shiv" class="smaller">
+        <h3>html5shim / html5shiv</h3>
+        <img src="images/shiv.jpg" class="shiv">
+        <p><a href="http://code.google.com/p/html5shiv/">http://code.google.com/p/html5shiv/</a></p>
+        <ul class="build">
+            <li>OldIE incorrectly parses unknown elements:
+<pre><code>&lt;section>
+    &lt;p>...&lt;/p>
+&lt;/section></code></pre>
+                becomes
+<pre><code>&lt;section>&lt;/section>
+&lt;p>...&lt;/p></code></pre>
+            </li>
+            <li>...unless you <code>createElement</code> it!
+                <pre><code>document.createElement('section');</code></pre>
+            </li>
+            <li>Also fixes printing and adds default HTML5 element styles</li>
+            <li><pre><code>&lt;!--[if lt IE 9]>
+&lt;script src="/polyfills/html5shiv.js">&lt;/script>
+&lt;![endif]--></code></pre></li>
+        </ul>
+    </article>
+
+
+
+    <article id="selectivizr">
+        <img src="images/selectivizr-logo.png" alt="Selectivizr" width="300">
+        <h3>Selectivizr</h3>
+
+        <p><a href="http://selectivizr.com/">http://selectivizr.com/</a></p>
+
+        <ul>
+            <li>Parses CSS files for wide range of selectors</li>
+            <li>Queries document for elements matching those selectors</li>
+            <li>Uses one of many external JavaScript selector libraries</li>
+            <li>Runs on document ready, not dynamic</li>
+        </ul>
+    </article>
+
+    <article class="fill">
+        <img src="images/selectivizr.png" alt="Selectivizr Support Chart">
+    </article>
+
+
+    <article id="prefixfree">
+        <img src="images/prefixfree.png" alt="-prefix-free">
+        <h3>-prefix-free</h3>
+
+        <p><a href="http://leaverou.github.com/prefixfree/">http://leaverou.github.com/prefixfree/</a></p>
+
+        <ul>
+            <li>Polyfill for <em>modern browsers</em>, does nothing in OldIE</li>
+            <li>Fills in vendor-prefixed CSS3 property names and values so you don't have to</li>
+            <li>Translates final CSS3 gradient syntax to old ones</li>
+            <li>Loads stylesheets via XHR &mdash; same-domain limitation</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Respond.js</h3>
+
+        <p><a href="https://github.com/scottjehl/Respond">https://github.com/scottjehl/Respond</a></p>
+
+        <ul>
+            <li>Adds support for min/max-width based CSS media queries back to IE6</li>
+            <li>Lightweight, no external dependencies</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Flexie</h3>
+
+        <p><a href="http://flexiejs.com/">http://flexiejs.com/</a></p>
+
+        <ul>
+            <li>Implements CSS3 flexible box model in IE and Opera</li>
+            <li>Matches the old spec not the new</li>
+            <li>Uses Selectivizr's engine for parsing the CSS and querying for matching elements</li>
+        </ul>
+    </article>
+
+    <article class="fill">
+        <img src="images/flexie-site.png" alt="Flexie Site">
+    </article>
+
+    <article class="fill">
+        <img src="images/flexie-playground.png" alt="Flexie Playground">
+    </article>
+
+
+    <article>
+        <h3>CSS Sandpaper</h3>
+        <p><a href="https://github.com/zoltan-dulac/cssSandpaper">https://github.com/zoltan-dulac/cssSandpaper</a></p>
+
+        <ul>
+            <li>Maps CSS3 properties to IE filters
+                <ul>
+                    <li><code>transform</code></li>
+                    <li><code>box-shadow</code></li>
+                    <li><code>linear-gradient</code></li>
+                    <li><code>text-shadow</code></li>
+                    <li><code>opacity</code></li>
+                </ul>
+            </li>
+            <li>Slightly non-standard code (<code>-sand-box-shadow</code> etc.)</li>
+            <li>Some filters do not render accurately</li>
+        </ul>
+    </article>
+
+
+    <article id="css3pie">
+        <img src="images/css3pie-logo.png" alt="CSS3 PIE">
+        <h3>CSS3 PIE</h3>
+
+        <p><a href="http://css3pie.com/">http://css3pie.com/</a></p>
+
+        <ul>
+            <li>Renders several CSS3 box decoration properties in IE 6-9:
+                <ul>
+                    <li>border-radius</li>
+                    <li>box-shadow</li>
+                    <li>border-image</li>
+                    <li>linear-gradient backgrounds</li>
+                    <li>multiple backgrounds</li>
+                </ul>
+            </li>
+            <li>IE .htc behavior, or optional JS file</li>
+            <li>Renders using VML in OldIE, SVG in IE9</li>
+        </ul>
+    </article>
+
+    <article class="shrink">
+        <img src="images/css3pie-site.png" alt="CSS3 PIE Site">
+    </article>
+
+
+    <article>
+        <h2>Questions so far?</h2>
+    </article>
+
+
+
+    <article>
+        <h3>The big question</h3>
+
+        <div class="build q-and-a">
+            <p>Q: Should I use a polyfill?</p>
+            <p>A: It depends.</p>
+        </div>
+    </article>
+
+
+    <article>
+        <h3>Considerations</h3>
+        <ul>
+            <li>Browser stats of target audience</li>
+            <li>System speed of target audience</li>
+            <li>Performance impact of the polyfill</li>
+            <li>Performance impact of not using the polyfill</li>
+            <li>Compatibility of multiple polyfills</li>
+            <li>Debugging time</li>
+            <li>How necessary are the features?</li>
+        </ul>
+    </article>
+
+    <article>
+        <h3>Graceful Degradation</h3>
+        <ul class="build">
+            <li>Usually the best choice, but not always an option.</li>
+            <li>Don't forget the <em>graceful</em> part!</li>
+            <li>What will users do if their experience is degraded?</li>
+            <li><em>Users don't switch browsers, they switch sites.</em></li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Decisions, decisions...</h3>
+        <div class="build">
+            <p>1. &ldquo;Is graceful degradation acceptable, or can I convince the necessary parties to allow it?&rdquo;</p>
+            <p><span class="yes">YES?</span> Great, do it!</p>
+            <p><span class="no">NO?</span> ...</p>
+        </div>
+    </article>
+
+    <article>
+        <h3>Decisions, decisions...</h3>
+        <div class="build">
+            <p>2. &ldquo;Would implementing the design require sending hacky markup, extra images, or dumbed-down code to capable browsers?&rdquo;</p>
+            <p><span class="no">NO?</span> Then we're all good.</p>
+            <p><span class="yes">YES?</span> Then consider using a polyfill...</p>
+        </div>
+    </article>
+
+    <article>
+        <h3>Decisions, decisions...</h3>
+        <div class="build">
+            <p>3. &ldquo;Would the polyfill create unacceptable performance or compatibility issues?&rdquo;</p>
+            <p><span class="no">NO?</span> Yay! Polyfill FTW! :)</p>
+            <p><span class="yes">YES?</span> Sorry, you're on your own. :(</p>
+        </div>
+    </article>
+
+
+
+    <article>
+        <h3>Assessing Performance</h3>
+
+        <p><em>Polyfill creators don't typically publish performance stats; it's up to you to measure.</em></p>
+
+        <h4>Common Factors</h4>
+        <ul>
+            <li>Most polyfills use JavaScript which will always be slower than native</li>
+            <li>Old browsers are also those with the slowest JS / DOM / rendering engines</li>
+            <li>Downloading polyfill code takes time; always check its size</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Assessing Performance</h3>
+
+        <h4>Polyfills that rewrite CSS</h4>
+        <ul>
+            <li>Usually fetch the CSS via XHR, might not be cached</li>
+            <li>RegExp parsing can be slow</li>
+            <li>Parsing time grows with size of the CSS file</li>
+            <li>Original CSS might already have been parsed and applied by the browser</li>
+        </ul>
+    </article>
+
+    <article>
+        <h3>Assessing Performance</h3>
+
+        <h4>Polyfills that query the DOM</h4>
+        <ul>
+            <li>IE &lt; 8 does not have <code>querySelectorAll</code>, must use JS traversal</li>
+            <li>The larger the DOM the slower the query</li>
+            <li>Reading certain properties (e.g. <code>offsetWidth</code>) causes reflow</li>
+            <li>Writing certain properties (e.g. <code>className</code>) causes reflow</li>
+        </ul>
+    </article>
+
+    <article>
+        <h3>Assessing Performance</h3>
+
+        <h4>Polyfills that render</h4>
+        <ul>
+            <li>Layout calculations can be intense</li>
+            <li>The more things it has to render the slower the rendering</li>
+            <li>Reading and writing to the DOM causes reflow</li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Compatibility Concerns</h3>
+
+        <ul>
+            <li>Polyfills that modify the DOM can easily collide with other polyfills</li>
+            <li>Other libraries that modify the DOM can easily create conflicts</li>
+            <li>Polyfills that parse/rewrite CSS typically cannot be used together</li>
+            <li>Using <code>!important</code> in CSS means polyfills can't modify <code>.style</code></li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>Test, test, test!</h3>
+
+        <ul>
+            <li>Use VMs with full standalone IEs</li>
+            <li>If possible, test on similar hardware</li>
+            <li><a href="http://www.browserstack.com/">http://www.browserstack.com/</a></li>
+        </ul>
+    </article>
+
+
+    <article>
+        <h3>In Conclusion,</h3>
+
+        <ul class="build">
+            <li>CSS polyfills can:
+                <ul>
+                    <li>Greatly reduce development time and effort</li>
+                    <li>Keep hacks out of capable browsers</li>
+                    <li>Improve overall user experience</li>
+                </ul>
+            </li>
+            <li>But you need to weigh the pros and cons.</li>
+            <li>Graceful degradation is always the first choice.</li>
+            <li>Polyfills will be with us long after OldIE is ancient history.</li>
+        </ul>
+    </article>
+
+    <article id="fin">
+        <h2>Thank you! Questions?</h2>
+
+        <p>Jason Johnston</p>
+        <p>@lojjic, @css3pie</p>
+    </article>
+
+
+</section>
+
+</body>
+</html>

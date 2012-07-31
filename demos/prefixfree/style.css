@@ -1,0 +1,13 @@
+
+p {
+    width: 20em;
+    margin: 5em auto;
+    padding: 5em;
+    border: 1px solid;
+    border-radius: 1em;
+    text-align: center;
+    font-size: 20px;
+
+    /* Unprefixed gradient using final syntax */
+    background: linear-gradient(90deg, red, orange, yellow, green, blue, indigo, violet);
+}

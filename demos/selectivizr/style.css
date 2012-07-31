@@ -1,0 +1,15 @@
+ul {
+    margin: 0 auto;
+    width: 20em;
+}
+
+ul > li {
+    display: block;
+    margin: 0;
+    padding: .5em 1em;
+    background: #EEE;
+}
+
+ul > :nth-child(odd) {
+    background: #CCC;
+}
